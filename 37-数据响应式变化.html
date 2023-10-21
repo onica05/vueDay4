@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据响应式变化</title>
+</head>
+<body>
+    <!-- 数据响应式变化 -->
+    <!-- 两种写法:
+        Vue.set(vm.lists, indexOfitem, newValue)
+        vm.$set(vm.lists, indexOfitem, newValue)
+        vm.lists: 表示处理的数组的名称; [要处理的是对象的话,就是要处理的对象名称]
+        indexOfitem: 表示要处理的数组的索引号;[要处理的是对象的话,就是要处理的属性名,或者说要新添加的属性名]
+        newValue:表示要处理的数组的值;[要处理的是对象的话,就是被修改之后的赋值]
+
+        以上两种写法,仅是写法不同,一个通过VUE 另一个通过vm.$set;最终实现效果是一致的
+     -->
+    
+    <div id="app">
+        <ul>
+            <li v-for="item in list">{{item}}</li>
+        </ul>
+        <div>
+            <div>{{info.name}}</div>
+            <div>{{info.age}}</div>
+            <div>{{info.gender}}</div>
+            <div>{{info.hobby}}</div>
+
+        </div>
+    </div>
+
+     <!-- 引入vue.js库文件 -->
+     <script type="text/javascript" src="../JS/vue.min.js"></script>
+     <script type="text/javascript">
+        
+         var vm = new Vue({
+             el: '#app', 
+             data: {
+                list:['apple', 'orange', 'banana'],
+                info:{
+                    name:'min',
+                    age:12
+                }
+             },
+         });
+        //  将数组索引为1的值,改成Lemon; 页面没有任何变化,但是在控制台可以看见数据变化.所以得知用索引的方式修改数据不是响应式的
+        //  vm.list[1] = 'lemon'
+        // 这时就可以看见变化___针对数组
+        // Vue.set(vm.list, 1, 'lemon');
+        vm.$set(vm.list, 2, 'lemon');
+
+        // 这时同样不能响应式变化,在控制台修改gender属性值,页面不会发生变化
+        // vm.info.gender = 'male'
+        //添加新属性____ 针对对象
+        Vue.set(vm.info, 'gender', 'female');
+        vm.$set(vm.info, 'hobby', 'tennis');
+
+
+
+
+     </script>
+</body>
+</html>
